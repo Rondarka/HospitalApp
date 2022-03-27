@@ -1,0 +1,16 @@
+﻿<Window x:Class="HospitalApp.PatientRecipe"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HospitalApp"
+        mc:Ignorable="d"
+        Title="Запись пациента на прием" Height="261.6" Width="365.6">
+    <Grid Margin="0,0,2,2">
+        <Label Content="Label" HorizontalAlignment="Center" Margin="0,39,0,0" VerticalAlignment="Top" x:Name="Recipeinfo"/>
+        <ComboBox HorizontalAlignment="Left" Margin="121,104,0,0" VerticalAlignment="Top" Width="120" x:Name="cmbPatients" SelectionChanged="cmbPatients_SelectionChanged"/>
+        <Label Content="Пациент" HorizontalAlignment="Left" Margin="59,100,0,0" VerticalAlignment="Top"/>
+        <Button Content="Записать" HorizontalAlignment="Left" Margin="144,173,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,25 @@
+﻿<Window x:Class="HospitalApp.RecipesCreate"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HospitalApp"
+        mc:Ignorable="d"
+        Title="Формирование записи на прием" Height="433.644" Width="322.538">
+    <Grid>
+        <Label Content="Дата" HorizontalAlignment="Left" Margin="41,118,0,0" VerticalAlignment="Top"/>
+        <Label Content="Начало интервала (мин)" HorizontalAlignment="Center" Margin="0,159,0,0" VerticalAlignment="Top"/>
+        <Label Content="Окончание интервала (мин)" HorizontalAlignment="Center" Margin="0,219,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" Margin="0,250,0,0" x:Name="IntrevalEnd"/>
+        <TextBox HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" Margin="0,191,0,0" x:Name="IntervalStart"/>
+        <TextBox HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" Margin="0,121,0,0" x:Name="RecipeDate"/>
+        <Label Content="Создание записи" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="201,10,10,0" x:Name="addMin" Visibility="Hidden"/>
+        <Label Content="Создание записи" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,36,0,0"/>
+        <Label Content="Врач" HorizontalAlignment="Left" Margin="41,69,0,0" VerticalAlignment="Top"/>
+        <ComboBox  HorizontalAlignment="Center" Margin="0,73,0,0" VerticalAlignment="Top" Width="126" x:Name="ComboDoctors" SelectionChanged="ComboDoctors_SelectionChanged" />
+        <Button Content="Создать записи" HorizontalAlignment="Center" Margin="0,359,0,0" VerticalAlignment="Top" Width="126" Click="Button_Click"/>
+        <Label Content="Время приема (мин)" HorizontalAlignment="Center" Margin="0,283,0,0" VerticalAlignment="Top" />
+        <TextBox HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="104" Margin="0,314,0,0" x:Name="timePriem"/>
+
+    </Grid>
+</Window>

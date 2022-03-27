@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище HospitalModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="Код врача" />
+    </Key>
+    <Property Name="Код врача" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ФИО" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Дата рождения" Type="date" Nullable="false" />
+    <Property Name="Адрес" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Паспорт" Type="bigint" Nullable="false" />
+    <Property Name="Специальность" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Номер участка" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="Номер карты" />
+    </Key>
+    <Property Name="Номер карты" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ФИО" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Дата рождения" Type="date" Nullable="false" />
+    <Property Name="Адрес" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Телефон" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="СНИЛС" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Полис" Type="bigint" Nullable="false" />
+    <Property Name="Номер участка" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Reception">
+    <Key>
+      <PropertyRef Name="Номер приема" />
+    </Key>
+    <Property Name="Номер приема" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Код врача" Type="int" Nullable="false" />
+    <Property Name="Дата приема" Type="date" Nullable="false" />
+    <Property Name="Время приема" Type="time" Precision="7" Nullable="false" />
+    <Property Name="is active" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Records">
+    <Key>
+      <PropertyRef Name="Номер записи" />
+    </Key>
+    <Property Name="Номер записи" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Номер приема" Type="int" Nullable="false" />
+    <Property Name="Номер карты" Type="int" Nullable="false" />
+    <Property Name="Код сотрудника" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sites">
+    <Key>
+      <PropertyRef Name="Номер участка" />
+    </Key>
+    <Property Name="Номер участка" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Название участка" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Адрес участка" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Worker">
+    <Key>
+      <PropertyRef Name="Код сотрудника" />
+    </Key>
+    <Property Name="Код сотрудника" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ФИО" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Должность" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Номер участка" Type="int" Nullable="false" />
+    <Property Name="Логин" Type="nvarchar" MaxLength="50" />
+    <Property Name="Пароль" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Врач_Номер участка">
+    <End Role="Sites" Type="Self.Sites" Multiplicity="1" />
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sites">
+        <PropertyRef Name="Номер участка" />
+      </Principal>
+      <Dependent Role="Doctor">
+        <PropertyRef Name="Номер участка" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Записи_Пациент">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="Records" Type="Self.Records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Номер карты" />
+      </Principal>
+      <Dependent Role="Records">
+        <PropertyRef Name="Номер карты" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Записи_Прием">
+    <End Role="Reception" Type="Self.Reception" Multiplicity="1" />
+    <End Role="Records" Type="Self.Records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reception">
+        <PropertyRef Name="Номер приема" />
+      </Principal>
+      <Dependent Role="Records">
+        <PropertyRef Name="Номер приема" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Записи_Сотрудники">
+    <End Role="Worker" Type="Self.Worker" Multiplicity="1" />
+    <End Role="Records" Type="Self.Records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Worker">
+        <PropertyRef Name="Код сотрудника" />
+      </Principal>
+      <Dependent Role="Records">
+        <PropertyRef Name="Код сотрудника" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Пациент_Номер участка">
+    <End Role="Sites" Type="Self.Sites" Multiplicity="1" />
+    <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sites">
+        <PropertyRef Name="Номер участка" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="Номер участка" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Прием_Врач">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
+    <End Role="Reception" Type="Self.Reception" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="Код врача" />
+      </Principal>
+      <Dependent Role="Reception">
+        <PropertyRef Name="Код врача" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Сотрудники_Номер участка">
+    <End Role="Sites" Type="Self.Sites" Multiplicity="1" />
+    <End Role="Worker" Type="Self.Worker" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sites">
+        <PropertyRef Name="Номер участка" />
+      </Principal>
+      <Dependent Role="Worker">
+        <PropertyRef Name="Номер участка" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище HospitalModelContainer">
+    <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reception" EntityType="Self.Reception" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Records" EntityType="Self.Records" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sites" EntityType="Self.Sites" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Worker" EntityType="Self.Worker" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Врач_Номер участка" Association="Self.FK_Врач_Номер участка">
+      <End Role="Sites" EntitySet="Sites" />
+      <End Role="Doctor" EntitySet="Doctor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Записи_Пациент" Association="Self.FK_Записи_Пациент">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Records" EntitySet="Records" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Записи_Прием" Association="Self.FK_Записи_Прием">
+      <End Role="Reception" EntitySet="Reception" />
+      <End Role="Records" EntitySet="Records" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Записи_Сотрудники" Association="Self.FK_Записи_Сотрудники">
+      <End Role="Worker" EntitySet="Worker" />
+      <End Role="Records" EntitySet="Records" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Пациент_Номер участка" Association="Self.FK_Пациент_Номер участка">
+      <End Role="Sites" EntitySet="Sites" />
+      <End Role="Patient" EntitySet="Patient" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Прием_Врач" Association="Self.FK_Прием_Врач">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Reception" EntitySet="Reception" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Сотрудники_Номер участка" Association="Self.FK_Сотрудники_Номер участка">
+      <End Role="Sites" EntitySet="Sites" />
+      <End Role="Worker" EntitySet="Worker" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,32 @@
+﻿<Page x:Class="HospitalApp.Pages.Patients"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HospitalApp.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Patients">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="195"/>
+            <RowDefinition Height="257*"/>
+        </Grid.RowDefinitions>
+        <DataGrid HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" SelectionChanged="DataGrid_SelectionChanged" x:Name="PatientsGrid"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="118,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" x:Name="PatName"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="118,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" x:Name="PatBirth"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="118,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" x:Name="PatAdres"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="328,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" x:Name="PatPhone"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="328,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" x:Name="PatSnils"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="328,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" x:Name="PatPolis"/>
+        <Label Content="ФИО" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="76,30,0,0"/>
+        <Button Content="Добавить пациента" HorizontalAlignment="Left" Margin="484,136,0,0" VerticalAlignment="Top" Width="129" Height="23" x:Name="newPatient" Click="newPatient_Click"/>
+        <Label Content="Дата рождения" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="18,80,0,0"/>
+        <Label Content="Адрес" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,135,0,0"/>
+        <Label Content="Телефон" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="266,27,0,0"/>
+        <Label Content="Снилс" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,83,0,0"/>
+        <Label Content="Полис" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="279,133,0,0"/>
+
+    </Grid>
+</Page>

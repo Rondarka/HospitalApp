@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HospitalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Врач">
+    <Key>
+      <PropertyRef Name="Код_врача" />
+    </Key>
+    <Property Name="Код_врача" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ФИО" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Дата_рождения" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Адрес" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Паспорт" Type="Int64" Nullable="false" />
+    <Property Name="Специальность" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Номер_участка" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Номер_участка1" Relationship="Self.FK_Врач_Номер_участка" FromRole="Врач" ToRole="Номер_участка" />
+    <NavigationProperty Name="Прием" Relationship="Self.FK_Прием_Врач" FromRole="Врач" ToRole="Прием" />
+  </EntityType>
+  <EntityType Name="Записи">
+    <Key>
+      <PropertyRef Name="Номер_записи" />
+    </Key>
+    <Property Name="Номер_записи" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Номер_приема" Type="Int32" Nullable="false" />
+    <Property Name="Номер_карты" Type="Int32" Nullable="false" />
+    <Property Name="Код_сотрудника" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Пациент" Relationship="Self.FK_Записи_Пациент" FromRole="Записи" ToRole="Пациент" />
+    <NavigationProperty Name="Прием" Relationship="Self.FK_Записи_Прием" FromRole="Записи" ToRole="Прием" />
+    <NavigationProperty Name="Сотрудники" Relationship="Self.FK_Записи_Сотрудники" FromRole="Записи" ToRole="Сотрудники" />
+  </EntityType>
+  <EntityType Name="Номер_участка">
+    <Key>
+      <PropertyRef Name="Номер_участка1" />
+    </Key>
+    <Property Name="Номер_участка1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Название_участка" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Адрес_участка" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Врач" Relationship="Self.FK_Врач_Номер_участка" FromRole="Номер_участка" ToRole="Врач" />
+    <NavigationProperty Name="Пациент" Relationship="Self.FK_Пациент_Номер_участка" FromRole="Номер_участка" ToRole="Пациент" />
+    <NavigationProperty Name="Сотрудники" Relationship="Self.FK_Сотрудники_Номер_участка" FromRole="Номер_участка" ToRole="Сотрудники" />
+  </EntityType>
+  <EntityType Name="Пациент">
+    <Key>
+      <PropertyRef Name="Номер_карты" />
+    </Key>
+    <Property Name="Номер_карты" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ФИО" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Дата_рождения" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Адрес" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Телефон" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="СНИЛС" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Полис" Type="Int64" Nullable="false" />
+    <Property Name="Номер_участка" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Записи" Relationship="Self.FK_Записи_Пациент" FromRole="Пациент" ToRole="Записи" />
+    <NavigationProperty Name="Номер_участка1" Relationship="Self.FK_Пациент_Номер_участка" FromRole="Пациент" ToRole="Номер_участка" />
+  </EntityType>
+  <EntityType Name="Прием">
+    <Key>
+      <PropertyRef Name="Номер_приема" />
+    </Key>
+    <Property Name="Номер_приема" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Код_врача" Type="Int32" Nullable="false" />
+    <Property Name="Время_приема" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="is_active" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Врач" Relationship="Self.FK_Прием_Врач" FromRole="Прием" ToRole="Врач" />
+    <NavigationProperty Name="Записи" Relationship="Self.FK_Записи_Прием" FromRole="Прием" ToRole="Записи" />
+  </EntityType>
+  <EntityType Name="Сотрудники">
+    <Key>
+      <PropertyRef Name="Код_сотрудника" />
+    </Key>
+    <Property Name="Код_сотрудника" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ФИО" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Должность" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Номер_участка" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Записи" Relationship="Self.FK_Записи_Сотрудники" FromRole="Сотрудники" ToRole="Записи" />
+    <NavigationProperty Name="Номер_участка1" Relationship="Self.FK_Сотрудники_Номер_участка" FromRole="Сотрудники" ToRole="Номер_участка" />
+  </EntityType>
+  <Association Name="FK_Врач_Номер_участка">
+    <End Role="Номер_участка" Type="Self.Номер_участка" Multiplicity="1" />
+    <End Role="Врач" Type="Self.Врач" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Номер_участка">
+        <PropertyRef Name="Номер_участка1" />
+      </Principal>
+      <Dependent Role="Врач">
+        <PropertyRef Name="Номер_участка" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Прием_Врач">
+    <End Role="Врач" Type="Self.Врач" Multiplicity="1" />
+    <End Role="Прием" Type="Self.Прием" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Врач">
+        <PropertyRef Name="Код_врача" />
+      </Principal>
+      <Dependent Role="Прием">
+        <PropertyRef Name="Код_врача" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Записи_Пациент">
+    <End Role="Пациент" Type="Self.Пациент" Multiplicity="1" />
+    <End Role="Записи" Type="Self.Записи" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Пациент">
+        <PropertyRef Name="Номер_карты" />
+      </Principal>
+      <Dependent Role="Записи">
+        <PropertyRef Name="Номер_карты" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Записи_Прием">
+    <End Role="Прием" Type="Self.Прием" Multiplicity="1" />
+    <End Role="Записи" Type="Self.Записи" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Прием">
+        <PropertyRef Name="Номер_приема" />
+      </Principal>
+      <Dependent Role="Записи">
+        <PropertyRef Name="Номер_приема" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Записи_Сотрудники">
+    <End Role="Сотрудники" Type="Self.Сотрудники" Multiplicity="1" />
+    <End Role="Записи" Type="Self.Записи" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Сотрудники">
+        <PropertyRef Name="Код_сотрудника" />
+      </Principal>
+      <Dependent Role="Записи">
+        <PropertyRef Name="Код_сотрудника" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Пациент_Номер_участка">
+    <End Role="Номер_участка" Type="Self.Номер_участка" Multiplicity="1" />
+    <End Role="Пациент" Type="Self.Пациент" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Номер_участка">
+        <PropertyRef Name="Номер_участка1" />
+      </Principal>
+      <Dependent Role="Пациент">
+        <PropertyRef Name="Номер_участка" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Сотрудники_Номер_участка">
+    <End Role="Номер_участка" Type="Self.Номер_участка" Multiplicity="1" />
+    <End Role="Сотрудники" Type="Self.Сотрудники" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Номер_участка">
+        <PropertyRef Name="Номер_участка1" />
+      </Principal>
+      <Dependent Role="Сотрудники">
+        <PropertyRef Name="Номер_участка" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HospitalEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Врач" EntityType="Self.Врач" />
+    <EntitySet Name="Записи" EntityType="Self.Записи" />
+    <EntitySet Name="Номер_участка" EntityType="Self.Номер_участка" />
+    <EntitySet Name="Пациент" EntityType="Self.Пациент" />
+    <EntitySet Name="Прием" EntityType="Self.Прием" />
+    <EntitySet Name="Сотрудники" EntityType="Self.Сотрудники" />
+    <AssociationSet Name="FK_Врач_Номер_участка" Association="Self.FK_Врач_Номер_участка">
+      <End Role="Номер_участка" EntitySet="Номер_участка" />
+      <End Role="Врач" EntitySet="Врач" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Прием_Врач" Association="Self.FK_Прием_Врач">
+      <End Role="Врач" EntitySet="Врач" />
+      <End Role="Прием" EntitySet="Прием" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Записи_Пациент" Association="Self.FK_Записи_Пациент">
+      <End Role="Пациент" EntitySet="Пациент" />
+      <End Role="Записи" EntitySet="Записи" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Записи_Прием" Association="Self.FK_Записи_Прием">
+      <End Role="Прием" EntitySet="Прием" />
+      <End Role="Записи" EntitySet="Записи" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Записи_Сотрудники" Association="Self.FK_Записи_Сотрудники">
+      <End Role="Сотрудники" EntitySet="Сотрудники" />
+      <End Role="Записи" EntitySet="Записи" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Пациент_Номер_участка" Association="Self.FK_Пациент_Номер_участка">
+      <End Role="Номер_участка" EntitySet="Номер_участка" />
+      <End Role="Пациент" EntitySet="Пациент" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Сотрудники_Номер_участка" Association="Self.FK_Сотрудники_Номер_участка">
+      <End Role="Номер_участка" EntitySet="Номер_участка" />
+      <End Role="Сотрудники" EntitySet="Сотрудники" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
